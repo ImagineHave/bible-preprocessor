@@ -1,6 +1,7 @@
 import json
 import io
 from pprint import pprint
+import requests
 
 with open('key_english.json') as bookkey:
     bkData  = json.load(bookkey)
@@ -8,13 +9,13 @@ with open('key_english.json') as bookkey:
 with open('key_genre_english.json') as genreKey:
     gkData  = json.load(genreKey)
     
-with open('asv.json') as bible:
+with open('testbible2.json') as bible:
     bData  = json.load(bible)
     
 
-pprint(bkData)
-pprint(gkData)
-pprint(bData)
+#pprint(bkData)
+#pprint(gkData)
+#pprint(bData)
 
 def getGenre(genreNumber):
     for genre in gkData:
@@ -49,5 +50,10 @@ with io.open('result.json', 'w', encoding='utf8') as outfile:
                       indent=4, sort_keys=True,
                       separators=(',', ': '), ensure_ascii=False)
     outfile.write(to_unicode(str_))
+    
+r = requests.post('https://flask4j-cwih.c9users.io/feeder/upload', data=data)
+print(r)
+r = requests.get('https://flask4j-cwih.c9users.io/feeder/load')
+print(r)
 
 
